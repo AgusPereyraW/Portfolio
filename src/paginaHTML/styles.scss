@@ -1,0 +1,840 @@
+/*general*/
+$color-fondo: #0F0F0F;
+$colordef-texto: #e0e0e0;
+$colornav: #e3b8e6;
+$color-resaltado: rgb(181, 19, 185);
+$shadow-claro: #ff2cff;
+$shadow-img: rgb(128, 12, 130);
+$fondo-botones: rgba(70, 70, 70, 0.4);
+$fondo-secciones: rgba(39, 38, 38, 0.565);
+$fondo-secciones2: rgba(57, 6, 58, 0.565);
+$fondo-tiempo: rgb(66, 65, 65);
+$tiempo-claro: #ffaaff;
+$tiempo-medio: #ef56ef;
+$tiempo-oscuro: #cd0acd;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+html {
+    scroll-padding-top: 10em;/* Ejemplo: 60px */
+    scroll-behavior: smooth; /* Ya lo tienes, pero lo incluyo por referencia */
+}
+
+html, body {
+    background-color: $color-fondo;
+    color: $colordef-texto; 
+    display: grid;
+    grid-template-rows: auto 1fr auto; /* Header, contenido y footer */
+    grid-template-columns: 1fr; /* Una sola columna */
+    row-gap: 1em;
+    width: 100%;
+}
+
+body {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    color: $colordef-texto;
+    text-align: center;
+    padding: 7em 0; //modificado
+    width: 100%;
+    margin-bottom: 5em;
+}
+
+@media (max-width: 768px) {
+    header {
+        margin-top: 0;
+        padding: 0.4em;
+    }
+}
+
+/*Barra de Navegacion*/
+nav {
+    top:0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    background-color: $color-fondo;
+    z-index: 1000;
+    padding: 18px;
+    position: fixed;
+    width: 100%;
+}
+
+nav ul {
+    list-style: none;
+    display: grid;
+    grid-auto-flow: column;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: $colordef-texto;
+    font-size: 18px;
+    padding: 10px 15px;
+    transition: 0.3s;
+    font-family: "Fira Sans", sans-serif;
+    position: relative;
+    font-weight: bold;
+}
+
+nav ul li a:hover{ 
+    color: $colornav;
+    text-shadow: 0 0 10px $color-resaltado;
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: $colornav;
+    bottom: 5px; /* Ajusta la posición del subrayado */
+    left: 0;
+    transition: width 0.3s ease-in-out;
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+.logo {
+    font-family: "Fira Sans", sans-serif;
+    font-size: 20px;
+    color: $colordef-texto;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.logo .nombre {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: 1,5s ease-in-out;
+}
+
+.logo .iniciales {
+    color:$color-resaltado;
+}
+
+.logo:hover {
+    width: 30%;
+}
+
+.logo:hover .nombre {
+    opacity: 1;
+    width: auto;
+}
+
+.logo:hover .iniciales {
+    display: none; /*quiero que no se vea al desplegar*/
+}
+
+@media (max-width: 768px) {
+    nav {
+        display: none;
+    }
+}
+
+/* Canvas de fondo */
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width:100%;
+    height: 100%;
+    transform: translateY(-10%);
+    pointer-events: none;
+}
+
+/*encabezado*/
+
+#rol-dinamico{
+    font-size: 1.6em;
+    font-family: "Fira Sans", sans-serif;
+    opacity: 1; /* Asegura que el texto sea visible inicialmente */
+    transition: opacity 0.5s ease-in-out; /* Transición para la opacidad */
+}
+
+#rol-dinamico.fade-out {
+    opacity: 0; /* Hace que el texto se desvanezca */
+}
+
+.titulo-principal{
+    font-size: 5em;
+    font-family: "Montserrat", sans-serif;
+    margin-top: 1em;
+    margin-bottom: 0.6em;
+    z-index: 1;
+}
+
+@media (max-width: 768px) {
+    .titulo-principal {
+        font-size: 4em;
+    }
+}
+
+.Inicio {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Inicio p{
+    text-shadow: 0 0 30px $shadow-claro;
+}
+
+#foto-perfil {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 270px;
+    display: block;
+    margin: 0;
+    box-shadow: 0 0 55px $shadow-img;
+    z-index: 1;
+}
+
+/*Body*/
+
+section {
+    border-radius: 10px;
+    width: 80%;
+    margin:0 auto 60px auto;
+}
+
+#SobreMi{
+    background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'), $fondo-secciones;
+    background-blend-mode: overlay;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    display: grid;
+    grid-template-columns: 0.7fr 2.3fr;
+    gap: 20px; 
+}
+
+@media (max-width: 768px) {
+    #SobreMi {
+        grid-template-columns: 1fr; 
+        gap: 10px; 
+        width: 100%;
+    }
+  
+    .Presentacion {
+        padding: 20px;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+        margin-right: 1em;
+    }
+  
+    .Titulo {
+        padding: 20px;
+        background-size: cover; 
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .Presentacion p {
+        text-align: center;
+        width: 100%;
+        font-size: 0.6em;
+      }
+  }
+
+.Titulo{
+    border-radius: 10px;
+    padding: 40px;
+    font-family: "Montserrat", sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    font-size: 2em;
+    background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'), $fondo-secciones2;
+}
+
+.Titulo h2 {
+    font-size: 2em;
+}
+
+.hola{
+    font-size: 4em;
+    color: $colornav;
+    text-shadow: 0 0 10px $color-resaltado;
+    font-family: "Dancing Script", cursive;
+}
+
+.Redes-Buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 35px;
+    margin: 40px;
+}
+
+.Redes-Buttons a {
+    background-color: $fondo-botones;
+    text-shadow: 0 0 10px $color-resaltado;
+    padding: 0.5em;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.Redes-Buttons a:hover {
+    background-color: $color-resaltado!important;
+    text-shadow: 0 0 20px $color-resaltado;
+    box-shadow: 0 0 20px $color-resaltado;
+}
+
+@media (max-width: 768px) {
+    .Redes-Buttons {
+      gap: 15px;
+      margin: 20px;
+      flex-wrap: wrap;
+    }
+  
+    .Redes-Buttons a {
+      padding: 8px; 
+    }
+  }
+
+.Presentacion{
+    text-align: right;
+    font-size: 2em;
+    font-family: "Fira Sans", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: 1em;
+}
+
+.Presentacion p {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.sobreMi_txt {
+    margin: 20px;
+}
+
+//formacion academica
+
+#FormacionAcademica{
+    background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'), $fondo-secciones;
+    background-blend-mode: overlay;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    padding: 40px;
+
+}
+
+#FormacionAcademica h1{
+    font-size: 4em;
+    color: $colornav;
+    text-shadow: 0 0 10px $color-resaltado;
+    font-family: "Dancing Script", cursive;
+    margin-bottom: 0.5em;
+}
+
+/*linea de tiempo*/
+
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+  
+.timeline__event {
+    background: $color-fondo;
+    margin-left: 15%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    color: $colordef-texto;
+    font-family: "Fira Sans", sans-serif;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px -12px $shadow-img,
+      0 18px 36px -18px rgba(0, 0, 0, 0.3),
+      0 -12px 36px -8px rgba(0, 0, 0, 0.025);
+}
+  
+.timeline__event__title {
+    font-size: 1.2rem;
+    line-height: 1.4;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: "Fira Sans", sans-serif;
+    color: $tiempo-claro;
+    letter-spacing: 1.5px;
+}
+  
+.timeline__event__content {
+    padding: 20px;
+}
+  
+.timeline__event__date {
+    color: $tiempo-claro;
+    font-size: 1.5rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+  
+.timeline__event__icon { /*icono1*/
+    border-radius: 8px 0 0 8px;
+    background: $fondo-tiempo;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: $tiempo-claro; /* Cambio de color del texto a blanco */
+    padding: 20px;
+}
+  
+/*
+.timeline__event__icon i {
+    position: absolute;
+    top: 50%;
+    left: -65px;
+    font-size: 2.5rem;
+    transform: translateY(-50%);
+}
+*/
+.timeline__event__description {
+    flex-basis: 60%;
+}
+  
+.timeline__event::after { /*lineas*/
+    content: "";
+    width: 2px;
+    height: 100%;
+    background: $tiempo-claro ;
+    position: absolute;
+    top: 52%;
+    transform: translateY(10%);
+    left: -3.5rem;
+    z-index: 0;
+}
+  
+.timeline__event::before { /*circulos*/
+    content: "";
+    width: 5rem;
+    height: 5rem;
+    position: absolute;
+    background: $fondo-tiempo;
+    border-radius: 100%;
+    left: -6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 2px solid $tiempo-claro;
+    z-index: 1;
+}
+  
+.timeline__event--type2::before { /*circulo2*/
+    border-color: $tiempo-medio;
+}
+  
+.timeline__event--type2::after { /*linea 2*/
+    background: $tiempo-medio; 
+  }
+  
+  .timeline__event--type2 .timeline__event__date { /*fecha 2*/
+    color: $tiempo-medio
+  }
+  
+  .timeline__event--type2 .timeline__event__icon { /*icono 2*/
+    background: $fondo-tiempo;
+  }
+  
+  .timeline__event--type2 .timeline__event__title {
+    color: $tiempo-medio;
+  }
+  
+  .timeline__event--type3::before { /*circulo3*/
+    border-color: $tiempo-oscuro;
+  }
+  
+  .timeline__event--type3 .timeline__event__date { /*fecha 3*/
+    color: $tiempo-oscuro;
+  }
+  
+  .timeline__event--type3 .timeline__event__icon { /*icono 3*/
+    background: $fondo-tiempo;
+  }
+  
+  .timeline__event--type3 .timeline__event__title {
+    color: $tiempo-oscuro;
+  }
+  
+  .timeline__event:last-child::after {
+    content: none;
+  }
+  
+.timeline__event:hover {
+    /*background-color: rgba(181, 19, 185, 0.3)!important;*/
+    text-shadow: 0 0 20px $color-resaltado;
+    box-shadow: 0 0 15px $color-resaltado;
+}
+
+
+//aptitudes
+
+#Aptitudes {
+    background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'), $fondo-secciones;
+    background-blend-mode: overlay;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    padding: 40px;
+    
+}
+
+#Aptitudes h1 {
+    font-size: 4em;
+    color: $colornav;
+    text-shadow: 0 0 10px $color-resaltado;
+    font-family: "Dancing Script", cursive;
+    text-align: left;
+}
+
+/*botones de aptitudes*/
+
+.titulo-acord {
+    width: 100%;
+    background-color: $fondo-secciones; /* Gris oscuro semi-transparente */
+    color: $colordef-texto; /* Blanco/gris claro */
+    border: 2px solid $color-resaltado; /* Borde con el color de detalle */
+    padding: 10px 20px;
+    font-size: 16px;
+    font-family: "Fira Sans", sans-serif;
+    border-radius: 5px; /* Bordes redondeados suaves */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Sombra leve */
+    margin: 10px 0; /* Separación arriba y abajo */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.titulo-acord:hover {
+    background-color: $color-resaltado; /* Cambio de color al pasar el mouse */
+    color: $colordef-texto;
+    border-color: $colordef-texto;
+    box-shadow: 3px 3px 10px $shadow-img;
+}
+
+.titulo-acord:active {
+    transform: scale(0.95); /* Pequeña reducción al hacer clic */
+}
+
+/*tecnologias*/
+
+.contenido-acord {
+    margin: auto;
+    padding: 10px;
+    justify-self: auto;
+}
+
+.contenido-acord img {
+    background-color: $fondo-botones;
+    border-radius: 10px;
+    object-fit: contain;
+    width: 100px;  /* Ancho fijo */
+    height: 80px;  /* Alto fijo */
+}
+
+
+figcaption {
+    font-style: "Fira Sans", sans-serif;
+    font-size: 15px;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.contenido-acord .tecnologias {
+    display: inline-block;
+    flex-direction: column;
+    align-items: center; 
+    margin: 10px;
+    width: auto;
+}
+
+.contenido-acord img:hover {
+    /*background-color: rgba(181, 19, 185, 0.3)!important;*/
+    text-shadow: 0 0 20px $color-resaltado;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+/*CONTACTO*/
+
+#Contacto {
+    background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'), $fondo-secciones2;
+    background-blend-mode: overlay;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    color: $colordef-texto;
+    font-family: "Fira Sans", sans-serif;
+    
+    form {
+      display: grid;
+      gap: 2rem;
+    }
+  }
+  
+  .form_fieldset {
+    border: 2px solid $colornav;
+    border-radius: 10px;
+    padding: 2rem;
+    display: grid;
+    gap: 1.5rem;
+    box-sizing: border-box;
+    
+  }
+  
+  .form_legend {
+    font-size: 4em;
+    color: $colornav;
+    text-shadow: 0 0 10px $color-resaltado;
+    font-family: "Dancing Script", cursive;
+    
+  }
+  
+  .form_group {
+    display: grid;
+    gap: 0.5rem;
+  
+    &--center {
+        display: flex;
+        justify-content: center;
+    }
+  }
+  
+  .form_label {
+    font-weight: bold;
+    color: $colornav;
+  }
+  
+  .form_input,
+  .form_textarea {
+    background-color: $fondo-secciones;
+    border: 1px solid $tiempo-oscuro;
+    border-radius: 8px;
+    padding: 0.75rem;
+    color: $colordef-texto;
+    font-size: 1rem;
+    box-shadow: inset 0 0 5px rgba($shadow-claro, 0.3);
+    transition: 0.3s ;
+  
+    &:focus {
+      outline: none;
+      border-color: $tiempo-claro;
+      box-shadow: 0 0 8px $shadow-claro;
+    }
+  }
+  
+  .form_textarea {
+    min-height: 120px; //para verlo mas alto
+  }
+  
+  .form_button {
+    background-color: $fondo-botones;
+    color: $colordef-texto;
+    border: 1px solid $tiempo-medio;
+    padding: 0.75rem 2rem;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px $tiempo-oscuro;
+  
+    &:hover {
+      background-color: $tiempo-oscuro;
+      color: $color-fondo;
+      box-shadow: 0 0 15px $shadow-claro;
+    }
+  }
+
+
+  
+
+/*FOOTER*/
+footer .cop {
+    font-family: "Montserrat", sans-serif;
+    text-align: center;
+}
+
+.scroll-smooth {
+    scroll-behavior: smooth;
+  }
+
+.fondo-1, .fondo-2, .fondo-3, .fondo-4 {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: start;
+    padding: 0;
+}
+
+.fondo-1 {
+    background: linear-gradient(to bottom, $color-fondo, $fondo-secciones);
+  }
+  
+  .fondo-2 {
+    background: linear-gradient(to bottom, $fondo-secciones, $fondo-secciones2);
+  }
+  
+  .fondo-3 {
+    background: linear-gradient(to bottom, $fondo-secciones2, $fondo-tiempo);
+  }
+  
+  .fondo-4 {
+    background: linear-gradient(to bottom, $fondo-tiempo, $color-fondo);
+  }
+
+  /* Estilos para la sección de Formación Académica en pantallas pequeñas */
+@media (max-width: 768px) {
+    #FormacionAcademica {
+        padding: 20px;
+    }
+
+    #FormacionAcademica h1 {
+        font-size: 3em;
+        text-align: center;
+        margin-bottom: 1em;
+    }
+
+    .timeline {
+        gap: 30px;
+    }
+
+    .timeline__event {
+        margin-left: 0; /* Eliminar el margen izquierdo */
+        flex-direction: column; /* Apilar los elementos verticalmente */
+        align-items: center; /* Centrar los elementos */
+        text-align: center; /* Centrar el texto */
+    }
+
+    .timeline__event__icon {
+        border-radius: 8px 8px 8px 8px; /* Bordes redondeados solo en la parte superior */
+        padding: 15px;
+    }
+
+    .timeline__event__icon i {
+        position: static; /* Posición estática para el icono */
+        transform: none; /* Eliminar la transformación */
+        font-size: 2em;
+    }
+
+    .timeline__event__date {
+        font-size: 1.2rem;
+    }
+
+    .timeline__event__content {
+        padding: 15px;
+    }
+
+    .timeline__event::before {
+        display: none; /* Ocultar la línea vertical y el círculo */
+    }
+
+    .timeline__event::after {
+    
+    left: 0em;
+    height: 2em;
+    margin-left: 50%;
+    }
+
+    .timeline__event--type2::after {
+        transform: translateY(340%);
+    }
+
+    .timeline__event--type1::after {
+        transform: translateY(420%);
+    }
+}
+
+/* Estilos para la sección de Contacto en pantallas pequeñas */
+@media (max-width: 768px) {
+    #Contacto {
+        padding: 1.5rem;
+    }
+
+    .form_fieldset {
+        padding: 1.5rem;
+        display: flex; 
+        flex-direction: column; 
+        gap:1em;
+    }
+
+    .form_legend {
+        font-size: 3em;
+        text-align: center; /* Centrar el título */
+        margin-bottom: 1rem; /* Agregar un poco de espacio debajo del título */
+    }
+
+    .form_group {
+        display: flex; 
+        flex-direction: column;
+    }
+
+    .form_label {
+        font-weight: bold;
+        color: $colornav;
+    }
+
+    .form_input,
+    .form_textarea {
+        background-color: $fondo-secciones;
+        border: 1px solid $tiempo-oscuro;
+        border-radius: 8px;
+        padding: 0.75rem;
+        color: $colordef-texto;
+        font-size: 1rem;
+        box-shadow: inset 0 0 5px rgba($shadow-claro, 0.3);
+        transition: 0.3s;
+        width: 100%; /* Asegurar que los inputs ocupen todo el ancho */
+        box-sizing: border-box; /* Incluir el padding y el border en el ancho */
+    }
+
+    .form_textarea {
+        min-height: 120px; /* Para verlo más alto */
+    }
+
+    .form_group--center {
+        display: flex;
+        justify-content: center; /* Centrar el botón */
+    }
+
+    .form_button {
+        width: 100%; /* Hacer que el botón ocupe todo el ancho */
+        box-sizing: border-box; /* Incluir padding y border en el ancho */
+    }
+}

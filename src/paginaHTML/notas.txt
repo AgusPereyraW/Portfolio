@@ -1,0 +1,35 @@
+La accesibilidad permite que personas con discapacidades
+puedan usar la pagina sin problemas.
+-aria-label: describe elementos que no llevan texto, ayuda a los
+usuarios con discapacidad visual.
+-role: se especifica lo que hace un elemento en html
+
+El SEO tecnico optimiza el codigo para los motores de busqueda
+-meta: para establecer como se ve mi pagina en el buscador
+-og:image: para establecer como se ve la pagina al ser compartida, 
+con una imagen de vista previa.
+-canonical: establece una url "oficial" para que google no piense que
+es contenido duplicado.
+
+--fase 2
+las media queries permiten aplicar estilos según el tamaño de la pantalla
+
+grid: se usa para indicar cuanto espacio especificamente ocupa cada fila/columna. 
+
+se usa la propiedad gap para indicar la separacion entre ellos, tambien row-gap y column-gap
+
+adaptativo vs responsive
+responsive: se adapta a las distintas pantallas de forma flexible
+adaptativo: util cuando de necesita una experiencia específica segun el dispositivo.
+
+postCSS: 
+
+uso de tailwind:
+snap-y y snap-mandatory: habilitan el comportamiento de "scroll snapping" verticalmente. snap-mandatory asegura que el 
+scroll siempre se detenga en un punto de "snap".
+snap-start (o snap-center, snap-end): En las secciones, estas clases definen dónde debe ocurrir el "snap". snap-start hace 
+que el inicio de la sección se alinee con el inicio del viewport.
+h-screen: Garantiza que cada sección ocupe toda la altura de la pantalla, haciendo que solo una sea visible a la vez (si no hay
+contenido que la haga más alta).
+overflow-y-scroll: Permite el desplazamiento vertical dentro del contenedor.
+scroll-smooth: Proporciona una animación suave al desplazarse entre las secciones.
